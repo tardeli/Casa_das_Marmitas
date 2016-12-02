@@ -1,12 +1,17 @@
 package br.com.casadasmarmitas.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,19 +24,16 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "Pedido")
 public class Pedido implements Serializable{
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    
     private Long codigo;
-    @ManyToOne
-    @JoinColumn(nullable = false)
     private Cliente cliente;
-    @Temporal(TemporalType.DATE)
     private Date data;
-    @ManyToOne
-    @JoinColumn(nullable = true)
     private Funcionario funcionario;
     private Status status;
-
+    private List<Produto> produtos = new ArrayList<>();
+        
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public Long getCodigo() {
         return codigo;
     }
@@ -40,6 +42,8 @@ public class Pedido implements Serializable{
         this.codigo = codigo;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "cliente",  nullable = true)
     public Cliente getCliente() {
         return cliente;
     }
@@ -48,6 +52,7 @@ public class Pedido implements Serializable{
         this.cliente = cliente;
     }
 
+    @Temporal(TemporalType.DATE)
     public Date getData() {
         return data;
     }
@@ -56,6 +61,8 @@ public class Pedido implements Serializable{
         this.data = data;
     }
 
+    @ManyToOne
+    @JoinColumn(name = "funcionario")
     public Funcionario getFuncionario() {
         return funcionario;
     }
@@ -72,6 +79,16 @@ public class Pedido implements Serializable{
         this.status = status;
     }
     
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "itens_pedido")
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
+    }
+    
     @Override
     public String toString(){
         String texto = "";
@@ -81,7 +98,14 @@ public class Pedido implements Serializable{
         texto+= "Data: "+this.getData()+"\n";
         texto+= "CodigoFuncionario: "+this.getFuncionario().getCodigo()+"\n";
         texto+= "NomeFuncionario: "+this.getFuncionario().getNome()+"\n";
-        texto+= "Status: "+this.getStatus();
+        texto+= "Status: "+this.getStatus()+"\n";
+        for (Produto produto : this.getProdutos()) {
+            texto+= " Codigo: "+produto.getCodigo().toString();
+            texto+= " Nome: "+produto.getNome();
+            texto+= " Descrição: "+produto.getDescricao();
+            texto+= " Tamanho: "+produto.getTamanho();
+            texto+= " Preço: "+produto.getPreco()+" | ";
+        }
         return texto;
     } 
     

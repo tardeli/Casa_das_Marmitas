@@ -13,5 +13,5 @@ public enum Tamanho {
     Marmita_1,
     Marmita_2,
     Marmita_3,
-    Marmita_4  
+    Marmita_4; 
 }
