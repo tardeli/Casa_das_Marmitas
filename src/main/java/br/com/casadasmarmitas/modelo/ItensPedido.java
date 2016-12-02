@@ -6,7 +6,7 @@ package br.com.casadasmarmitas.modelo;
  */
 public class ItensPedido {
    
-    private int cm_IdItem;
+    private int cm_IdItemm;
     private Pedido pedido;
     private Produto produto;
     private int cm_Quantidade;
