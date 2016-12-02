@@ -21,7 +21,7 @@ import org.junit.Test;
 public class EntregadorTeste {
     @Test
     @Ignore
-    public void cadastrarEntregador(){
+    public void cadastrar(){
         Entregador objeto = new Entregador();
         Empresa empresa;
         EntregadorDao entregadorDao = new EntregadorDao();
@@ -42,7 +42,7 @@ public class EntregadorTeste {
    }
     
     @Test
-    public void listarEntregadores(){
+    public void listar(){
         EntregadorDao entregadorDao = new EntregadorDao();
         List<Entregador> entregadores = entregadorDao.listarObjetos();
         System.out.println("-------------------------------------------");

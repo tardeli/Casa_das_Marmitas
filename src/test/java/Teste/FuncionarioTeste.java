@@ -29,7 +29,7 @@ public class FuncionarioTeste {
     
     @Test
     @Ignore
-    public void cadastrarFuncionario(){
+    public void cadastrar(){
         Funcionario objeto = new Funcionario();
         FuncionarioDao funcionarioDao = new FuncionarioDao();
         objeto.setNome("Altobeli da Rocha");

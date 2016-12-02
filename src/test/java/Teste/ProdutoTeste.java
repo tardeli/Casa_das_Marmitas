@@ -5,9 +5,7 @@
  */
 package Teste;
 
-import br.com.casadasmarmitas.dao.ClienteDao;
 import br.com.casadasmarmitas.dao.ProdutoDao;
-import br.com.casadasmarmitas.modelo.Cliente;
 import br.com.casadasmarmitas.modelo.Produto;
 import br.com.casadasmarmitas.modelo.Tamanho;
 import java.util.List;
@@ -21,7 +19,7 @@ import org.junit.Test;
 public class ProdutoTeste {
     @Test
     @Ignore
-    public void cadastrarProduto(){
+    public void cadastrar(){
         Produto objeto = new Produto();
         ProdutoDao dao = new ProdutoDao();
         objeto.setNome("Marmita 2");

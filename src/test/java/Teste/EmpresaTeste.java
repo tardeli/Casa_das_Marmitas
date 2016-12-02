@@ -18,7 +18,7 @@ import org.junit.Test;
 public class EmpresaTeste {
     @Test
     @Ignore
-    public void cadastrarEmpresa(){
+    public void cadastrar(){
         Empresa objeto = new Empresa();
         EmpresaDao empresaDao = new EmpresaDao();
         objeto.setNome("MotoEntrega Chapecó");
@@ -32,7 +32,7 @@ public class EmpresaTeste {
    }
     
    @Test
-   public void listarEmpresa(){
+   public void listar(){
        EmpresaDao dao = new EmpresaDao();
         List<Empresa> objetos = dao.listarObjetos();
         System.out.println("-------------------------------------");

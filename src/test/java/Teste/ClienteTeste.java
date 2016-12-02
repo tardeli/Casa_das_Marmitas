@@ -17,7 +17,7 @@ import org.junit.Test;
  */
 public class ClienteTeste {
     @Test
-    public void listarClientes() {
+    public void listar() {
         ClienteDao cliente = new ClienteDao();
         List<Cliente> objetos = cliente.listarObjetos();
         System.out.println("-------------------------------------");
@@ -41,7 +41,7 @@ public class ClienteTeste {
     
     @Test
     @Ignore
-    public void cadastrarCliente(){
+    public void cadastrar(){
         Cliente objeto = new Cliente();
         ClienteDao clienteDao = new ClienteDao();
         objeto.setNome("Tardeli da Rocha");

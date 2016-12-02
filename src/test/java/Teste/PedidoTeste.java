@@ -25,7 +25,7 @@ public class PedidoTeste {
 
     @Test
     @Ignore
-    public void cadastrarPedido() {
+    public void cadastrar() {
         Pedido objeto = new Pedido();
         PedidoDao pedidoDao = new PedidoDao();
         
@@ -44,7 +44,7 @@ public class PedidoTeste {
     }
     
     @Test
-    public void listarEntregadores(){
+    public void listar(){
         PedidoDao dao = new PedidoDao();
         List<Pedido> pedidos = dao.listarObjetos();
         System.out.println("-------------------------------------------");
