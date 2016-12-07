@@ -26,7 +26,7 @@ import org.junit.Test;
 public class PedidoTeste {
 
     @Test
-    //@Ignore
+    @Ignore
     public void cadastrar() {
         Pedido objeto = new Pedido();
         PedidoDao pedidoDao = new PedidoDao();
@@ -44,23 +44,37 @@ public class PedidoTeste {
         
         objeto.setFuncionario(funcionario);
         
-        objeto.setStatus(Status.Transito);
-               
+        objeto.setStatus(Status.Cancelado);
+        
+        ProdutoDao produtoDao = new ProdutoDao();
+        Produto produto = produtoDao.buscarObjeto(1L);
+        
+        objeto.getProdutos().add(produto);
+        
+        //produto = produtoDao.buscarObjeto(2L);
+        //objeto.getProdutos().add(produto);
+        
+        //produto = produtoDao.buscarObjeto(3L);
+        //objeto.getProdutos().add(produto);
+        
+        produto = produtoDao.buscarObjeto(4L);
+        objeto.getProdutos().add(produto);
+        
+
         pedidoDao.salvarOuAtualizarObjeto(objeto);
     }
     
     @Test
     @Ignore
-    public void buscarPedido(){
-        PedidoDao dao = new PedidoDao();
-        Pedido pedido = dao.buscarObjeto(1L);
+    public void buscarEntregadores(){
+        ProdutoDao produtoDao = new ProdutoDao();
+        Produto produto = produtoDao.buscarObjeto(1L);
         System.out.println("-------------------------------------------");
-        System.out.println(pedido.toString());
+        System.out.println(produto.toString());
         System.out.println("-------------------------------------------");     
     }
     
     @Test
-    @Ignore
     public void listar(){
         PedidoDao dao = new PedidoDao();
         List<Pedido> pedidos = dao.listarObjetos();

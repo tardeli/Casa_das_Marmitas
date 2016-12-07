@@ -42,6 +42,7 @@ public class EntregadorTeste {
    }
     
     @Test
+    @Ignore
     public void listar(){
         EntregadorDao entregadorDao = new EntregadorDao();
         List<Entregador> entregadores = entregadorDao.listarObjetos();
@@ -52,6 +53,7 @@ public class EntregadorTeste {
         }
     }
     @Test
+    @Ignore
     public void buscarEntregadores(){
         EntregadorDao entregadorDao = new EntregadorDao();
         Entregador entregador = entregadorDao.buscarObjeto(3L);
@@ -61,6 +63,7 @@ public class EntregadorTeste {
     }
     
     @Test
+    @Ignore
     public void buscar(){
         EntregadorDao entregadorDao = new EntregadorDao();
         Entregador entregador = entregadorDao.buscarObjeto(3L);
