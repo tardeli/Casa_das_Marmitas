@@ -62,15 +62,10 @@ public class Produto implements Serializable{
     public void setPreco(double preco) {
         this.preco = preco;
     }
-    
+
     @Override
-    public String toString(){
-        String texto = "";
-        texto+= "Codigo: "+this.getCodigo()+"\n";
-        texto+= "Nome: "+this.getNome()+"\n";
-        texto+= "Descrição: "+this.getDescricao()+"\n";
-        texto+= "Preço: "+this.getPreco()+"\n";
-        texto+= "Tamanho: "+this.getTamanho()+"\n";
-        return texto;
-    } 
+    public String toString() {
+        return "Produto{" + "codigo=" + codigo + ", nome=" + nome + ", descricao=" + descricao + ", tamanho=" + tamanho + ", preco=" + preco + '}';
+    }
+       
 }

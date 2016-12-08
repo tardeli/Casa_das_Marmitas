@@ -26,7 +26,7 @@ import org.junit.Test;
 public class PedidoTeste {
 
     @Test
-    //@Ignore
+    @Ignore
     public void cadastrar() {
         Pedido objeto = new Pedido();
         PedidoDao pedidoDao = new PedidoDao();
@@ -34,17 +34,17 @@ public class PedidoTeste {
         //objeto.setCodigo(1l); //atualizar o campo 1
         
         ClienteDao clienteDao = new ClienteDao();
-        Cliente cliente = clienteDao.buscarObjeto(1L);
+        Cliente cliente = clienteDao.buscarObjeto(2L);
         
         objeto.setCliente(cliente);
         objeto.setData(new Date());
 
         FuncionarioDao funcionarioDao = new FuncionarioDao();
-        Funcionario funcionario = funcionarioDao.buscarObjeto(6L);
+        Funcionario funcionario = funcionarioDao.buscarObjeto(4L);
         
         objeto.setFuncionario(funcionario);
         
-        objeto.setStatus(Status.Transito);
+        objeto.setStatus(Status.Cancelado);
                
         pedidoDao.salvarOuAtualizarObjeto(objeto);
     }

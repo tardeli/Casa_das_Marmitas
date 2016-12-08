@@ -30,7 +30,6 @@ public class Pedido implements Serializable{
     private Date data;
     private Funcionario funcionario;
     private Status status;
-    private List<Produto> produtos = new ArrayList<>();
         
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -78,36 +77,10 @@ public class Pedido implements Serializable{
     public void setStatus(Status status) {
         this.status = status;
     }
-    
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "itens_pedido")
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
-    
     @Override
-    public String toString(){
-        String texto = "";
-        texto+= "CodigoPedido: "+this.getCodigo()+"\n";
-        texto+= "CodigoCliente: "+this.getCliente().getCodigo()+"\n";
-        texto+= "NomeCliente: "+this.getCliente().getNome()+"\n";
-        texto+= "Data: "+this.getData()+"\n";
-        texto+= "CodigoFuncionario: "+this.getFuncionario().getCodigo()+"\n";
-        texto+= "NomeFuncionario: "+this.getFuncionario().getNome()+"\n";
-        texto+= "Status: "+this.getStatus()+"\n";
-        for (Produto produto : this.getProdutos()) {
-            texto+= " Codigo: "+produto.getCodigo().toString();
-            texto+= " Nome: "+produto.getNome();
-            texto+= " Descrição: "+produto.getDescricao();
-            texto+= " Tamanho: "+produto.getTamanho();
-            texto+= " Preço: "+produto.getPreco()+" | ";
-        }
-        return texto;
-    } 
-    
+    public String toString() {
+        return "Pedido{" + "codigo=" + codigo + ", cliente=" + cliente + ", data=" + data + ", funcionario=" + funcionario + ", status=" + status + '}';
+    }
          
 }

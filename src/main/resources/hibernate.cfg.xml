@@ -17,5 +17,6 @@
     <mapping class="br.com.casadasmarmitas.modelo.Entregador"/>
     <mapping class="br.com.casadasmarmitas.modelo.Produto"/>
     <mapping class="br.com.casadasmarmitas.modelo.Pedido"/>
+    <mapping class="br.com.casadasmarmitas.modelo.ItemPedido"/>
   </session-factory>
 </hibernate-configuration>
