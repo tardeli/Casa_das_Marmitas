@@ -7,6 +7,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -18,10 +19,15 @@ import javax.persistence.Table;
 public class Entregador extends PessoaFisica{
     
     private String rg;
+    @NotNull(message = "o campo é obrgatorio")
     @ManyToOne
     @JoinColumn(nullable = false)
     private Empresa empresa;
-        
+
+    public Entregador() {
+        this.empresa = new Empresa();
+    }
+            
     public String getRg() {
         return rg;
     }
@@ -54,6 +60,8 @@ public class Entregador extends PessoaFisica{
         texto+= "CodigoCnpj: "+this.getEmpresa().getCnpj()+"\n";
         return texto;
     }
+    
+    
     
      
 }

@@ -5,7 +5,6 @@
  */
 package Teste;
 
-import br.com.casadasmarmitas.dao.ClienteDao;
 import br.com.casadasmarmitas.dao.ItemPedidoDao;
 import br.com.casadasmarmitas.dao.PedidoDao;
 import br.com.casadasmarmitas.dao.ProdutoDao;

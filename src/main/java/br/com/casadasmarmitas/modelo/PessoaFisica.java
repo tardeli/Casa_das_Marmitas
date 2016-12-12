@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -13,6 +14,7 @@ import javax.persistence.TemporalType;
 @MappedSuperclass
 public class PessoaFisica extends Pessoa{
    
+    
     @Column(nullable = false, unique = true, length = 14)
     private String cpf;
     @Temporal(TemporalType.DATE)
