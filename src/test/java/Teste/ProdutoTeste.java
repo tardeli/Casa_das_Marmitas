@@ -7,7 +7,7 @@ package Teste;
 
 import br.com.casadasmarmitas.dao.ProdutoDao;
 import br.com.casadasmarmitas.modelo.Produto;
-import br.com.casadasmarmitas.modelo.Tamanho;
+import br.com.casadasmarmitas.enumeradores.Tamanho;
 import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -24,8 +24,8 @@ public class ProdutoTeste {
         ProdutoDao dao = new ProdutoDao();
         objeto.setNome("Marmita 2");
         objeto.setDescricao("Arroz,feijão  e batata");
-        objeto.setPreco(34.32);
-        objeto.setTamanho(Tamanho.Marmita_3);
+        //objeto.setPreco(34.32);
+        //objeto.setTamanho(Tamanho.Marmita_3);
         dao.salvarOuAtualizarObjeto(objeto);
    }
     
@@ -49,8 +49,8 @@ public class ProdutoTeste {
         objeto.setCodigo(1L);
         objeto.setNome("Marmita 4");
         objeto.setDescricao("Arroz,massa");
-        objeto.setPreco(34.56);
-        objeto.setTamanho(Tamanho.Marmita_4);
+        //objeto.setPreco(34.56);
+        //objeto.setTamanho(Tamanho.Marmita_4);
         dao.salvarOuAtualizarObjeto(objeto);
        
     }

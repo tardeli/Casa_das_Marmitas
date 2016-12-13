@@ -1,12 +1,16 @@
 package br.com.casadasmarmitas.modelo;
 
+import br.com.casadasmarmitas.enumeradores.Tamanho;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 /**
  *
  * @author Tardeli
@@ -19,8 +23,11 @@ public class Produto implements Serializable{
     private Long codigo;
     private String nome;
     private String descricao;
+    @NotNull(message = "O Campo tamanho é obrigatório")
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
     private Tamanho tamanho;
-    @Column(precision = 5, scale = 2)
+    @NotNull(message = "fftgt")
     private Double preco;
 
     public Long getCodigo() {
@@ -55,13 +62,14 @@ public class Produto implements Serializable{
         this.tamanho = tamanho;
     }
 
-    public double getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
-    public void setPreco(double preco) {
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
+
 
     @Override
     public String toString() {

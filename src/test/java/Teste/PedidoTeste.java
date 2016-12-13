@@ -13,7 +13,7 @@ import br.com.casadasmarmitas.modelo.Cliente;
 import br.com.casadasmarmitas.modelo.Funcionario;
 import br.com.casadasmarmitas.modelo.Pedido;
 import br.com.casadasmarmitas.modelo.Produto;
-import br.com.casadasmarmitas.modelo.Status;
+import br.com.casadasmarmitas.enumeradores.Status;
 import java.util.Date;
 import java.util.List;
 import org.junit.Ignore;

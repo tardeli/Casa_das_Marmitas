@@ -1,5 +1,6 @@
 package br.com.casadasmarmitas.modelo;
 
+import br.com.casadasmarmitas.enumeradores.Status;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;

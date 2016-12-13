@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+
 /**
  *
  * @author Tardeli
@@ -19,7 +20,7 @@ import javax.validation.constraints.NotNull;
 public class Entregador extends PessoaFisica{
     
     private String rg;
-    @NotNull(message = "o campo é obrgatorio")
+    @NotNull(message = "O Campo CPF é obrigatório")
     @ManyToOne
     @JoinColumn(nullable = false)
     private Empresa empresa;

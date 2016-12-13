@@ -30,7 +30,7 @@
                         <h:outputText value="#{produto.descricao}" />
                     </p:column>
                     <p:column headerText="Tamanho">
-                        <h:outputText value="#{produto.tamanho}" />
+                        <h:outputText value="#{produto.tamanho.nome}" />
                     </p:column>
                     <p:column headerText="Preço">
                         <h:outputText value="#{produto.preco}" />
@@ -65,14 +65,19 @@
                 <h:panelGrid id="painel_dialago" columns="2">
                     <h:outputLabel>Nome: <p:inputText id="nome" value="#{produtoBean.produto.nome}" size="40" /></h:outputLabel>
                     <h:outputLabel>Descrição: <p:inputText id="descricao" value="#{produtoBean.produto.descricao}" size="40" /></h:outputLabel>
-                    <h:outputLabel>Tamanho: <p:inputText id="tamanho" value="#{produtoBean.produto.tamanho}" size="40" /></h:outputLabel>
-                    
-
+                    <h:outputLabel>Tamanho: 
+                        <p:selectOneMenu id="combobox_tamanhoProduto"  value="#{produtoBean.produto.tamanho}" >
+                            <f:selectItem itemLabel="Selecione um Item" />
+                            <f:selectItems value="#{produtoBean.tamanho}"  var="tamanho" itemValue="#{tamanho}" itemLabel="#{tamanho.nome}"/>           
+                        </p:selectOneMenu>
+                    </h:outputLabel>
                     <h:outputLabel>Preço: 
                         <p:inputText id="preco" value="#{produtoBean.produto.preco}" size="40">
-                            <f:convertNumber pattern="#00.00" />
+                            <f:validateBean/>
                         </p:inputText>
                     </h:outputLabel>
+
+                    
                 </h:panelGrid>
                 <h:panelGrid columns="2">
 

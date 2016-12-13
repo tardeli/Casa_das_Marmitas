@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.casadasmarmitas.modelo;
+package br.com.casadasmarmitas.enumeradores;
 
 /**
  *
  * @author Tardeli
  */
-public enum Tamanho {
-    Marmita_1,
-    Marmita_2,
-    Marmita_3,
-    Marmita_4; 
+public enum Status {
+    Pendente,
+    Transito,
+    Cancelado,
+    Entregue;
 }

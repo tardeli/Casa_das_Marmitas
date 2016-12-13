@@ -7,6 +7,7 @@ package br.com.casadasmarmitas.controle;
 
 import br.com.casadasmarmitas.dao.ProdutoDao;
 import br.com.casadasmarmitas.modelo.Produto;
+import br.com.casadasmarmitas.enumeradores.Tamanho;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,17 @@ public class ProdutoBean implements Serializable {
     private Produto produto = new Produto();
     private List<Produto> listaObjetos;
     private ProdutoDao clienteDao = new ProdutoDao();
+    
+    private Tamanho[] tamanho;
 
+    public Tamanho[] getTamanho() {
+        return Tamanho.values();
+    }
+
+    public void setTamanho(Tamanho[] tamanho) {
+        this.tamanho = tamanho;
+    }
+    
     public ProdutoBean() {
         listaObjetos = new ArrayList<>();
         getListaObjetos();
@@ -86,4 +97,7 @@ public class ProdutoBean implements Serializable {
     public void setListaObjetos(List<Produto> listaObjetos) {
         this.listaObjetos = listaObjetos;
     }
+   
+    
+    
 }

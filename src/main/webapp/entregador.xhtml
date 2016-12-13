@@ -26,8 +26,11 @@
                     <p:column headerText="Entregador" sortBy="#{entregador.nome}" filterBy="#{entregador.nome}">
                         <h:outputText value="#{entregador.nome}" />
                     </p:column>
-                    <p:column headerText="Empresa">
+                    <p:column headerText="Empresa" sortBy="#{entregador.empresa.nome}" filterBy="#{entregador.empresa.nome}">
                         <h:outputText value="#{entregador.empresa.nome}" />
+                    </p:column>
+                    <p:column headerText="Telefone">
+                        <h:outputText value="#{entregador.telefone}" />
                     </p:column>
                     <!--
                     <p:column headerText="Data de Nascimento" width="80">
