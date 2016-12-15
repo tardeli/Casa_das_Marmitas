@@ -23,6 +23,7 @@ public class ItemPedido implements Serializable{
     private Pedido pedido;
     private Produto produto;
     private int quantidade;
+    private Double total;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,6 +48,9 @@ public class ItemPedido implements Serializable{
     @ManyToOne
     @JoinColumn(nullable = false)
     public Produto getProduto() {
+        if(produto==null){
+            this.produto = new Produto();
+        }
         return produto;
     }
 
@@ -62,6 +66,14 @@ public class ItemPedido implements Serializable{
         this.quantidade = quantidade;
     }
 
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+    
     @Override
     public String toString() {
         return "ItemPedido{" + "codigo=" + codigo + ", pedido=" + pedido + ", produto=" + produto + ", quantidade=" + quantidade + '}';

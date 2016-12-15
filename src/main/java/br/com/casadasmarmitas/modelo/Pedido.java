@@ -31,7 +31,12 @@ public class Pedido implements Serializable{
     private Date data;
     private Funcionario funcionario;
     private Status status;
-        
+    private Double total;
+
+    public Pedido() {
+        this.total = 0.0;
+    }
+            
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     public Long getCodigo() {
@@ -79,9 +84,17 @@ public class Pedido implements Serializable{
         this.status = status;
     }
 
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
     @Override
     public String toString() {
-        return "Pedido{" + "codigo=" + codigo + ", cliente=" + cliente + ", data=" + data + ", funcionario=" + funcionario + ", status=" + status + '}';
-    }
+        return "Pedido{" + "codigo=" + codigo + ", cliente=" + cliente + ", data=" + data + ", funcionario=" + funcionario + ", status=" + status + ", total=" + total + '}';
+    }   
          
 }
