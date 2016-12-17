@@ -5,7 +5,9 @@
  */
 package br.com.casadasmarmitas.controle;
 
+import br.com.casadasmarmitas.dao.ClienteDao;
 import br.com.casadasmarmitas.dao.ProdutoDao;
+import br.com.casadasmarmitas.modelo.Cliente;
 import br.com.casadasmarmitas.modelo.ItemPedido;
 import br.com.casadasmarmitas.modelo.Pedido;
 import br.com.casadasmarmitas.modelo.Produto;
@@ -21,7 +23,7 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class VendaBean implements Serializable {
+public class PedidoBean implements Serializable {
 
     private List<Produto> listaProdutos;
     private ProdutoDao produtoDao = new ProdutoDao();
@@ -29,11 +31,18 @@ public class VendaBean implements Serializable {
     private Pedido pedido;
     private List<ItemPedido> listaItens;
     
+    private List<Cliente> listaCliente;
+    private ClienteDao clienteDao = new ClienteDao();
+    private Boolean listaItensVazia;
 
-    public VendaBean() {
+    public PedidoBean() {
         this.getListaProdutos();
     }
-
+   
+    public void limpar(){
+        this.listaItens = new ArrayList<>();
+    }
+    
     public void adicionar(Produto produto) {
         ItemPedido itemPedido = new ItemPedido();
         int produtoAtual = -1;
@@ -73,6 +82,9 @@ public class VendaBean implements Serializable {
     public void excluir(ItemPedido itemPedido) {
         listaItens.remove(itemPedido);
         calcular();
+        if(listaItens.isEmpty()){
+            listaItensVazia=false;
+        }
     }
        
     public List<Produto> getListaProdutos() {
@@ -112,7 +124,26 @@ public class VendaBean implements Serializable {
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
     }
-    
+
+    public List<Cliente> getListaCliente() {
+        return listaCliente = clienteDao.listarObjetos();
+    }
+
+    public void setListaCliente(List<Cliente> listaCliente) {
+        this.listaCliente = listaCliente;
+    }
+
+    public Boolean getListaItensVazia() {
+        if(listaItensVazia==null){
+            return listaItensVazia=false;
+        }
+        return listaItensVazia = true;
+    }
+
+    public void setListaItensVazia(Boolean listaItensVazia) {
+        this.listaItensVazia = listaItensVazia;
+    }
+
     
 
 }

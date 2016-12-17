@@ -33,6 +33,16 @@ public class FuncionarioBean implements Serializable{
     public void novo(){
         this.funcionario = new Funcionario();
     }
+    
+    public void validarLogin(){
+        boolean situacao = funcionarioDao.autenticarLogin(funcionario.getUsuario(), funcionario.getSenha());
+        if(situacao){
+            Messages.addGlobalInfo("Login efetuado com sucesso");
+        }else{
+            Messages.addGlobalInfo("Tente novamente!");
+        }
+        
+    }
            
     public String salvar(){
         if(this.funcionario.getCodigo()==null){

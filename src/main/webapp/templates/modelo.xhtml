@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <title>Sistema Casa das Marmitas</title>
+    </h:head>
+    <h:body>
+         <p:growl id="mensagem"  />
+        
+            <div id = "geral">
+                <div id = "top"  >
+                    <p:graphicImage library="img" name="marmita.png" style="display: block; margin-left: auto; margin-right: auto;"/>
+                </div>
+
+                <div id = "cabecalho">
+                    <h:form>  
+                        <p:growl id="messages"/>
+
+                        <p:menubar style="margin-bottom: 10px;">
+                            <p:submenu label="Cadastrar">
+                                <p:menuitem value="Cliente" url="cliente.xhtml" />
+                                <p:menuitem value="Entregador" url="entregador.xhtml" />
+                                <p:menuitem value="Funcionario" url="funcionario.xhtml" />
+                                <p:menuitem value="Produto" url="produto.xhtml" />
+                                <p:menuitem value="Pedido" url="pedido.xhtml" />
+                            </p:submenu>
+
+                            <p:submenu label="Sobre">
+                                
+                            </p:submenu>
+
+                            <p:submenu label="Sair" >
+ 
+                            </p:submenu>
+                        </p:menubar>
+                    </h:form>
+                </div>
+
+                <div id = "conteudo">
+                    <ui:insert name="conteudo"/>
+                </div>
+
+            </div>
+        
+    </h:body>
+</html>
+

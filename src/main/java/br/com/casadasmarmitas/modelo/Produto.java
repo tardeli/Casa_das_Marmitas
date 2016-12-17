@@ -29,6 +29,7 @@ public class Produto implements Serializable{
     @Column(nullable = false, length = 30)
     private Tamanho tamanho;
     @NotNull(message = "fftgt")
+    @Column(scale = 7,  precision = 2)
     private Double preco;
 
     public Long getCodigo() {

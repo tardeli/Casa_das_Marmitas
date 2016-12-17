@@ -1,16 +1,14 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/templates/modelo.xhtml">
 
-    <h:head>
-        <title>Controle Funcionario</title>
-    </h:head>
-    <h:body style="margin: 20px">
-        <p:growl id="mensagem"  />
+    <ui:define name="conteudo">
 
         <h:form id="form_funcionario">   
 
@@ -65,11 +63,11 @@
                         </p:commandButton>
                     </p:column> 
                     <f:facet name="footer">
-                       <h:outputText value="Existem " />
-                       <h:outputText value="#{fn:length(funcionarioBean.listaObjetos)}" />
-                       <h:outputText value=" pessoas cadastradas. " />  
-                   </f:facet>
-                    
+                        <h:outputText value="Existem " />
+                        <h:outputText value="#{fn:length(funcionarioBean.listaObjetos)}" />
+                        <h:outputText value=" pessoas cadastradas. " />  
+                    </f:facet>
+
                 </p:dataTable>
                 <p:confirmDialog global="true">
                     <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
@@ -102,5 +100,5 @@
             </h:form>
 
         </p:dialog>
-    </h:body>
-</html>
+    </ui:define>    
+</ui:composition>

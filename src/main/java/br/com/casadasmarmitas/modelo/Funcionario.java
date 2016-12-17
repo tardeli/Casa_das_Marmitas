@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -15,6 +16,7 @@ import javax.persistence.Table;
 public class Funcionario extends PessoaFisica{
     
     private String cargo;
+    @NotNull
     private String usuario;
     private String senha;
 

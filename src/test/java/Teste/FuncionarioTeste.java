@@ -17,6 +17,7 @@ import org.junit.Test;
  */
 public class FuncionarioTeste {
     @Test
+    @Ignore
     public void buscarFuncionario() {
         FuncionarioDao c = new FuncionarioDao();
         Long codigo = 1L;
@@ -45,4 +46,12 @@ public class FuncionarioTeste {
         objeto.setSenha("123");
         funcionarioDao.salvarOuAtualizarObjeto(objeto);    
    }
+    
+    @Test
+    public void autenticarLogin(){
+        FuncionarioDao funcionarioDao = new FuncionarioDao();
+        boolean resultado = funcionarioDao.autenticarLogin("rocha", "");
+        System.out.println(resultado);
+    }
+    
 }
