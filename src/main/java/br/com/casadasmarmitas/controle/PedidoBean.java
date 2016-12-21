@@ -1,13 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.casadasmarmitas.controle;
 
 import br.com.casadasmarmitas.dao.ClienteDao;
+import br.com.casadasmarmitas.dao.FuncionarioDao;
+import br.com.casadasmarmitas.dao.ItemPedidoDao;
+import br.com.casadasmarmitas.dao.PedidoDao;
 import br.com.casadasmarmitas.dao.ProdutoDao;
+import br.com.casadasmarmitas.enumeradores.Status;
 import br.com.casadasmarmitas.modelo.Cliente;
+import br.com.casadasmarmitas.modelo.Funcionario;
 import br.com.casadasmarmitas.modelo.ItemPedido;
 import br.com.casadasmarmitas.modelo.Pedido;
 import br.com.casadasmarmitas.modelo.Produto;
@@ -15,7 +15,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import org.omnifaces.util.Messages;
 
 /**
  *
@@ -26,67 +28,98 @@ import javax.faces.bean.SessionScoped;
 public class PedidoBean implements Serializable {
 
     private List<Produto> listaProdutos;
-    private ProdutoDao produtoDao = new ProdutoDao();
-
-    private Pedido pedido;
     private List<ItemPedido> listaItens;
-    
     private List<Cliente> listaCliente;
-    private ClienteDao clienteDao = new ClienteDao();
+    private ProdutoDao produtoDao = new ProdutoDao();
+    @ManagedProperty(value = "#{funcionarioBean}")
+    private FuncionarioBean funcionarioBean;
+    private Pedido pedido;
     private Boolean listaItensVazia;
+
+    private Funcionario funcionario;
+    private FuncionarioDao funcionarioDao = new FuncionarioDao();
+
+    private ClienteDao clienteDao = new ClienteDao();
 
     public PedidoBean() {
         this.getListaProdutos();
     }
-   
-    public void limpar(){
+
+    public void limpar() {
         this.listaItens = new ArrayList<>();
+        this.pedido = new Pedido();
     }
-    
+
     public void adicionar(Produto produto) {
         ItemPedido itemPedido = new ItemPedido();
         int produtoAtual = -1;
-        for (int posicao = 0; posicao<listaItens.size()&&produtoAtual<0; posicao++) {
+        for (int posicao = 0; posicao < listaItens.size() && produtoAtual < 0; posicao++) {
             ItemPedido item = listaItens.get(posicao);
-            if(item.getProduto().equals(produto)){
+            if (item.getProduto().equals(produto)) {
                 produtoAtual = posicao;
-            } 
+            }
         }
         itemPedido.setProduto(produto);
-        
-        if(produtoAtual<0){
+
+        if (produtoAtual < 0) {
             itemPedido.setQuantidade(1);
             itemPedido.getProduto().getPreco();
             itemPedido.setTotal(itemPedido.getProduto().getPreco());
             listaItens.add(itemPedido);
-            
-        }else{
+        } else {
             ItemPedido item = listaItens.get(produtoAtual);
-            itemPedido.setQuantidade(item.getQuantidade()+1);
-            itemPedido.setTotal(item.getProduto().getPreco()*itemPedido.getQuantidade());
+            itemPedido.setQuantidade(item.getQuantidade() + 1);
+            itemPedido.setTotal(item.getProduto().getPreco() * itemPedido.getQuantidade());
             listaItens.set(produtoAtual, itemPedido);
         }
         calcular();
-       
+        this.getListaItensVazia();
     }
-    
-    public void calcular(){
-        double valor =0.0;
+
+    public void calcular() {
+        double valor = 0.0;
         for (ItemPedido listaItens : listaItens) {
-            valor+= listaItens.getTotal();
+            valor += listaItens.getTotal();
         }
         pedido.setTotal(valor);
-    
+
     }
 
     public void excluir(ItemPedido itemPedido) {
         listaItens.remove(itemPedido);
         calcular();
-        if(listaItens.isEmpty()){
-            listaItensVazia=false;
-        }
+        this.getListaItensVazia();
+
     }
-       
+
+    public void inserirPedido() {
+        try {
+            if (pedido.getTotal() == 0) {
+                Messages.addGlobalError("Adicione itens ao pedido!");
+            } else {
+                PedidoDao pedidoDao = new PedidoDao();
+                FuncionarioDao funcionarioDao = new FuncionarioDao();
+
+                pedido.setStatus(Status.Entregue);
+
+                this.funcionario = funcionarioDao.autenticarLogin(funcionarioBean.getFuncionario().getUsuario(), funcionarioBean.getFuncionario().getSenha());
+
+                pedido.setFuncionario(this.funcionario);
+                Long codigo = pedidoDao.salvar(pedido, listaItens);
+
+                
+
+                Messages.addGlobalInfo("Salvo com sucesso!");
+            }
+
+        } catch (Exception e) {
+            Messages.addGlobalError("Não foi salvo: " + e.getMessage());
+        }
+
+        limpar();
+        this.getListaItensVazia();
+    }
+
     public List<Produto> getListaProdutos() {
         return listaProdutos = produtoDao.listarObjetos();
     }
@@ -115,7 +148,7 @@ public class PedidoBean implements Serializable {
     }
 
     public Pedido getPedido() {
-        if(pedido == null){
+        if (pedido == null) {
             this.pedido = new Pedido();
         }
         return pedido;
@@ -134,8 +167,8 @@ public class PedidoBean implements Serializable {
     }
 
     public Boolean getListaItensVazia() {
-        if(listaItensVazia==null){
-            return listaItensVazia=false;
+        if (listaItens == null || listaItens.isEmpty()) {
+            return listaItensVazia = false;
         }
         return listaItensVazia = true;
     }
@@ -144,6 +177,23 @@ public class PedidoBean implements Serializable {
         this.listaItensVazia = listaItensVazia;
     }
 
-    
+    public Funcionario getFuncionario() {
+        if (funcionario == null) {
+            return funcionario = new Funcionario();
+        }
+        return funcionario;
+    }
+
+    public void setFuncionario(Funcionario funcionario) {
+        this.funcionario = funcionario;
+    }
+
+    public FuncionarioBean getFuncionarioBean() {
+        return funcionarioBean;
+    }
+
+    public void setFuncionarioBean(FuncionarioBean funcionarioBean) {
+        this.funcionarioBean = funcionarioBean;
+    }
 
 }

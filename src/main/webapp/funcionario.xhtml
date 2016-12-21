@@ -14,7 +14,7 @@
 
             <p:panel header="Lista - Funcionario">
                 <p:dataTable id = "dataTable" value="#{funcionarioBean.listaObjetos}" var="funcionario" 
-                             emptyMessage="Nenhum Registro Encotrado com esta pesquisa" paginator="true" rows="8" style="font-size: 11pt"><br />
+                             emptyMessage="Nenhum Registro Encotrado com esta pesquisa" paginator="true" paginatorPosition="top"  rows="8" style="font-size: 11pt"><br />
                     <f:facet name="header" >
                         <p:commandButton value = "Novo" update=":form_dialago:painel_dialago" oncomplete="PF('dialago').show();" ></p:commandButton>
                     </f:facet>

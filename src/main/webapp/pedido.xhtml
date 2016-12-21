@@ -14,7 +14,7 @@
 
             <p:panel header="Lista - Produtos">
                 <p:dataTable id = "dataTableProdutos" value="#{pedidoBean.listaProdutos}" var="produto" 
-                             emptyMessage="Nenhum Registro Encotrado com esta pesquisa" paginator="true" rows="2" style="font-size: 11pt"><br />
+                             emptyMessage="Nenhum Registro Encotrado com esta pesquisa" paginator="true" paginatorPosition="top" rows="2" style="font-size: 11pt"><br />
                     <p:column headerText="Cód." width="30">
                         <h:outputText value="#{produto.codigo}" />
                     </p:column>
@@ -40,7 +40,7 @@
             <p:separator/>
             <p:panel header="Lista - Itens">
                 <p:dataTable id = "dataTableItens" value="#{pedidoBean.listaItens}" var="item" 
-                             emptyMessage="Nenhum Registro Encotrado com esta pesquisa" paginator="true" rows="3" style="font-size: 11pt"><br />
+                             emptyMessage="Nenhum Registro Encotrado com esta pesquisa" paginator="true" paginatorPosition="top" rows="3" style="font-size: 11pt"><br />
                     <p:column headerText="Cód." width="30">
                         <h:outputText value="#{item.produto.codigo}" />
                     </p:column>
@@ -66,9 +66,10 @@
                     </p:column>
 
                     <p:column headerText="" width="35">
-                        <p:commandButton icon="ui-icon-trash" actionListener="#{pedidoBean.excluir(item)}" update=":form_venda:dataTableItens"/>
+                        <p:commandButton icon="ui-icon-trash" actionListener="#{pedidoBean.excluir(item)}" update=":form_venda:dataTableItens "/>
                     </p:column> 
                     <p:growl id="message" showDetail="true" /> 
+
                     <f:facet name="footer">
                         <h:outputText value="Existem " />
                         <h:outputText value="#{fn:length(pedidoBean.listaItens)}" />
@@ -77,8 +78,11 @@
                         <h:outputText value="#{pedidoBean.pedido.total}">
                             <f:convertNumber pattern="#0.00" />
                         </h:outputText>
-                        <p:commandButton icon="" value="Confirmar" 
+                        <p:commandButton style="margin-left: 30px;"
+                                         icon="" value="Finalizar Venda" 
                                          oncomplete="PF('dialago').show();"
+                                         rendered="#{pedidoBean.listaItensVazia!=false}"
+                                         update=":form_dialago_fimVenda:painel_dialago_venda"
                                          />
 
                     </f:facet>
@@ -87,33 +91,86 @@
         </h:form>
 
         <p:dialog widgetVar="dialago" closable="false" modal="true" header="Salvar Pedido" resizable="false">
-            <h:form id="form_dialago">
+            <h:form id="form_dialago_fimVenda">
 
-                <h:panelGrid id="painel_dialago" columns="1">
+                <h:panelGrid id="painel_dialago_venda" columns="1">
                     <h:outputLabel>Data: 
                         <p:outputLabel id="data"  value="#{pedidoBean.pedido.data}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </h:outputLabel>
-                    <h:outputLabel>Cliente: 
-                        <p:selectOneMenu id="combobox_cliente"  value="#{pedidoBean.pedido.cliente}" converter="clienteConverter">
+                    <h:outputLabel>Funcionario: 
+                        <p:outputLabel id="funcionario"  value="#{pedidoBean.funcionarioBean.funcionario.nome}">                  
+                        </p:outputLabel>
+                    </h:outputLabel>
+                    <p:outputLabel for="comboboxCliente">Cliente: 
+                        <p:selectOneMenu filter="true" id="comboboxCliente"  value="#{pedidoBean.pedido.cliente}" converter="clienteConverter">
                             <f:selectItem itemLabel="Selecione um Cliente" />
                             <f:selectItems value="#{pedidoBean.listaCliente}"  var="Cliente" itemValue="#{Cliente}" itemLabel="#{Cliente.nome}"/>       
                         </p:selectOneMenu>
-
+                    </p:outputLabel>
+                    <h:outputLabel>Valor Total: 
+                        <p:outputLabel id="total"  value="#{pedidoBean.pedido.total}">  
+                            <f:convertNumber pattern="#0.00" />
+                        </p:outputLabel>
                     </h:outputLabel>
                 </h:panelGrid>
 
-                <h:panelGrid columns="2">
-                    <p:commandButton widgetVar="btn_salvar" value="Salvar" id="salvar"  oncomplete="PF('dialago').hide()" />
-                    <p:commandButton value="Cancelar" id="fechar" 
+                <h:panelGrid columns="3">
+                    <p:commandButton value="Salvar" 
+                                     id="salvar"  
+                                     actionListener="#{pedidoBean.inserirPedido()}"
+                                     update=":form_venda:dataTableItens :form_dialago_fimVenda:painel_dialago_venda :mensagem"/>
+                    <p:commandButton value="Sair" id="fechar" 
                                      actionListener="#{pedidoBean.limpar()}" 
                                      oncomplete="PF('dialago').hide()" 
-                                     update=":form_venda:dataTableItens"/>   
+                                     update=":form_venda:dataTableItens"/>
+                    <p:commandButton value="Cadastrar Entregador" id="cadastrarEntrega" 
+                                     oncomplete="PF('dialagoEntrega').show()" 
+                                     />
                 </h:panelGrid>
             </h:form>
 
         </p:dialog>
+
+        <p:dialog widgetVar="dialagoEntrega" closable="false" modal="true" header="Controle Entrega" resizable="false">
+            <h:form id="form_dialago_fimEntrega">
+
+                <h:panelGrid id="painel_dialago_Entrega" columns="1">
+
+
+                    <p:outputLabel>Hora:
+                        <p:outputLabel value="#{entregaBean.entrega.hora}"> 
+                            <f:convertDateTime pattern="HH:mm:ss" timeZone="GMT-02:00"/>
+                        </p:outputLabel>
+                    </p:outputLabel>
+                    <p:outputLabel for="comboboxEntregador">Entregador: 
+                        <p:selectOneMenu filter="true" id="comboboxEntregador"  value="#{entregaBean.entrega.entregador}" converter="entregadorConverter" >
+                            <f:selectItem itemLabel="Selecione um entregador" />
+                            <f:selectItems value="#{entregaBean.listaEntregadores}"  var="Entregador" itemValue="#{Entregador}" itemLabel="#{Entregador.nome}"/>       
+                        </p:selectOneMenu>
+                    </p:outputLabel>
+                   
+                    <p:outputLabel>Taxa:
+                        <p:inputText value = "#{entregaBean.entrega.taxa}"/>
+                    </p:outputLabel>
+                </h:panelGrid>
+
+                <h:panelGrid columns="2">
+                    <p:commandButton value="Salvar" 
+                                     id="salvar"      
+                                     />
+                    <p:commandButton value="Sair" id="sair"       
+                                     actionListener="#{entregaBean.limpar()}" 
+                                     oncomplete="PF('dialagoEntrega').hide()" 
+                                     update=":form_dialago_fimEntrega"
+                                     />
+                </h:panelGrid>
+            </h:form>
+
+
+        </p:dialog>
+
 
     </ui:define>
 </ui:composition>

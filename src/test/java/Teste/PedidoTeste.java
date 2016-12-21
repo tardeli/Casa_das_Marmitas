@@ -8,11 +8,9 @@ package Teste;
 import br.com.casadasmarmitas.dao.ClienteDao;
 import br.com.casadasmarmitas.dao.FuncionarioDao;
 import br.com.casadasmarmitas.dao.PedidoDao;
-import br.com.casadasmarmitas.dao.ProdutoDao;
 import br.com.casadasmarmitas.modelo.Cliente;
 import br.com.casadasmarmitas.modelo.Funcionario;
 import br.com.casadasmarmitas.modelo.Pedido;
-import br.com.casadasmarmitas.modelo.Produto;
 import br.com.casadasmarmitas.enumeradores.Status;
 import java.util.Date;
 import java.util.List;
@@ -28,25 +26,48 @@ public class PedidoTeste {
     @Test
     @Ignore
     public void cadastrar() {
-        Pedido objeto = new Pedido();
+        Pedido pedido = new Pedido();
         PedidoDao pedidoDao = new PedidoDao();
         
-        //objeto.setCodigo(1l); //atualizar o campo 1
+        //pedido.setCodigo(1l); //atualizar o campo 1
         
         ClienteDao clienteDao = new ClienteDao();
-        Cliente cliente = clienteDao.buscarObjeto(2L);
+        Cliente cliente = clienteDao.buscarObjeto(1L);
         
-        objeto.setCliente(cliente);
-        objeto.setData(new Date());
-
         FuncionarioDao funcionarioDao = new FuncionarioDao();
         Funcionario funcionario = funcionarioDao.buscarObjeto(4L);
+                       
+        //pedido.setCliente(null);
+//        pedido.setCliente(cliente);
+        System.out.println(pedido.getCliente().getClass().getName());
+        pedido.setData(new Date());
+        pedido.setFuncionario(funcionario);
+        pedido.setStatus(Status.Cancelado);
+        pedido.setTotal(200.00);
+                       
+        pedidoDao.salvarOuAtualizarObjeto(pedido);
         
-        objeto.setFuncionario(funcionario);
+       ///////////////////////////////////////////////////////////////////////////
+       
+       
+       
+       
+//        ItemPedidoDao itemPedidoDao = new ItemPedidoDao();
+//        List<ItemPedido> itens = new ArrayList<>();
+//        itens = itemPedidoDao.listarObjetos();
+//        
+//        for (ItemPedido iten : itens) {
+//            ItemPedido itemPedido = new ItemPedido();
+//            itemPedido.getPedido().setCodigo(codigoPedido);
+//            itemPedido.getProduto().setCodigo(iten.getProduto().getCodigo());
+//            itemPedido.setQuantidade(iten.getQuantidade());
+//            itemPedido.setTotal(iten.getTotal());
+//            
+//            itemPedidoDao.salvarOuAtualizarObjeto(itemPedido);
+//                    
+//        }
         
-        objeto.setStatus(Status.Cancelado);
-               
-        pedidoDao.salvarOuAtualizarObjeto(objeto);
+        
     }
     
     @Test

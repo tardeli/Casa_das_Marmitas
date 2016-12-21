@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 public class Funcionario extends PessoaFisica{
     
     private String cargo;
-    @NotNull
     private String usuario;
     private String senha;
 

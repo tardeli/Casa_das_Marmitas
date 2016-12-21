@@ -1,28 +1,47 @@
 
 package br.com.casadasmarmitas.modelo;
 
+import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author Tardeli
  */
-public class Entrega {
+@Entity
+public class Entrega implements Serializable{
     
-    private int codigo; 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long codigo;
+    @ManyToOne
+    @JoinColumn(name = "pedido")
     private Pedido pedido;
+    @ManyToOne
+    @JoinColumn(name = "entregador")
     private Entregador entregador;
-    private double cm_Taxa;
+    private double taxa;
+    @Temporal(TemporalType.TIME)
     private Date hora;
-    
-    public int getCodigo() {
+
+    public Long getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(Long codigo) {
         this.codigo = codigo;
     }
-    
+
     public Pedido getPedido() {
         return pedido;
     }
@@ -39,19 +58,53 @@ public class Entrega {
         this.entregador = entregador;
     }
 
-    public double getCm_Taxa() {
-        return cm_Taxa;
+    public double getTaxa() {
+        return taxa;
     }
 
-    public void setCm_Taxa(double cm_Taxa) {
-        this.cm_Taxa = cm_Taxa;
+    public void setTaxa(double taxa) {
+        this.taxa = taxa;
     }
 
     public Date getHora() {
-        return hora;
+        return hora = Calendar.getInstance().getTime();
     }
 
     public void setHora(Date hora) {
         this.hora = hora;
     }
+
+    @Override
+    public String toString() {
+        return "Entrega{" + "codigo=" + codigo + ", pedido=" + pedido + ", entregador=" + entregador + ", taxa=" + taxa + ", hora=" + hora + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Objects.hashCode(this.codigo);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Entrega other = (Entrega) obj;
+        if (!Objects.equals(this.codigo, other.codigo)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
+   
 }

@@ -14,6 +14,7 @@
     <mapping class="br.com.casadasmarmitas.modelo.Cliente"/>
     <mapping class="br.com.casadasmarmitas.modelo.Funcionario"/>
     <mapping class="br.com.casadasmarmitas.modelo.Empresa"/>
+    <mapping class="br.com.casadasmarmitas.modelo.Entrega"/>
     <mapping class="br.com.casadasmarmitas.modelo.Entregador"/>
     <mapping class="br.com.casadasmarmitas.modelo.Produto"/>
     <mapping class="br.com.casadasmarmitas.modelo.Pedido"/>

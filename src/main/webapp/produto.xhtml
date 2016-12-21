@@ -14,7 +14,7 @@
 
             <p:panel header="Lista - Produtos">
                 <p:dataTable id = "dataTable" value="#{produtoBean.listaObjetos}" var="produto" 
-                             emptyMessage="Nenhum Registro Encotrado com esta pesquisa" paginator="true" rows="8" style="font-size: 11pt"><br />
+                             emptyMessage="Nenhum Registro Encotrado com esta pesquisa" paginator="true" paginatorPosition="top" rows="8" style="font-size: 11pt"><br />
                     <f:facet name="header" >
                         <p:commandButton value = "Novo" update=":form_dialago:painel_dialago" oncomplete="PF('dialago').show();" ></p:commandButton>
                     </f:facet>
@@ -46,7 +46,7 @@
                     <f:facet name="footer">
                         <h:outputText value="Existem " />
                         <h:outputText value="#{fn:length(produtoBean.listaObjetos)}" />
-                        <h:outputText value=" pessoas cadastradas. " />  
+                        <h:outputText value=" produtos cadastradas. " />  
                     </f:facet>
 
                 </p:dataTable>

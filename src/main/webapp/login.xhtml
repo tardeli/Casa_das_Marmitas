@@ -22,9 +22,10 @@
                         <h:inputText id ="senha" value="#{funcionarioBean.funcionario.senha}" />
                     </h:outputLabel>
 
-                    <p:commandButton icon=" ui-icon-search" 
+                    <p:commandButton icon=" ui-icon-search"
                                      actionListener="#{funcionarioBean.validarLogin()}"
-                                     update=":form_login :mensagem"/>
+                                     update=":form_login :mensagem"
+                                     />
                     
                 </h:panelGrid>
             </p:panel>

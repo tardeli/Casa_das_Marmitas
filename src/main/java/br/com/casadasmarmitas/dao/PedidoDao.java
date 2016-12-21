@@ -5,8 +5,10 @@
  */
 package br.com.casadasmarmitas.dao;
 
+import br.com.casadasmarmitas.modelo.ItemPedido;
 import br.com.casadasmarmitas.modelo.Pedido;
 import br.com.casadasmarmitas.util.HibernateUtil;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -14,22 +16,30 @@ import org.hibernate.Transaction;
  *
  * @author Tardeli
  */
-public class PedidoDao extends Generic_Dao<Pedido>{
+public class PedidoDao extends Generic_Dao<Pedido> {
+
     private Session sessao;
     private Transaction transacao;
-    
-    public Long salvar(Pedido pedido){
+
+    public Long salvar(Pedido pedido, List<ItemPedido> itens) {
         Long codigo = null;
         try {
             sessao = (Session) HibernateUtil.getSessionFactory().openSession();
             transacao = sessao.beginTransaction();
             codigo = (Long) sessao.save(pedido);
             transacao.commit();
+            Pedido p = this.buscarObjeto(codigo);
+
+            for (ItemPedido item : itens) {
+                item.setPedido(p);
+                ItemPedidoDao itemPedidoDao = new ItemPedidoDao();
+                itemPedidoDao.salvarOuAtualizarObjeto(item);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally{
+        } finally {
             sessao.close();
         }
-        return 1L;
+        return codigo;
     }
 }

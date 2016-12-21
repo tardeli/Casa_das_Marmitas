@@ -7,6 +7,7 @@ package Teste;
 
 import br.com.casadasmarmitas.util.HibernateUtil;
 import org.hibernate.Session;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -15,6 +16,7 @@ import org.junit.Test;
  */
 public class HibernateUtilTeste {
     @Test
+    //@Ignore
     public void conectar(){
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.close();

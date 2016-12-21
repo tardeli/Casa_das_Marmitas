@@ -50,8 +50,8 @@ public class FuncionarioTeste {
     @Test
     public void autenticarLogin(){
         FuncionarioDao funcionarioDao = new FuncionarioDao();
-        boolean resultado = funcionarioDao.autenticarLogin("rocha", "");
-        System.out.println(resultado);
+        //boolean resultado = funcionarioDao.autenticarLogin("rocha", "");
+        //System.out.println(resultado);
     }
     
 }
