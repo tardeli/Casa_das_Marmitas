@@ -94,83 +94,71 @@
             <h:form id="form_dialago_fimVenda">
 
                 <h:panelGrid id="painel_dialago_venda" columns="1">
-                    <h:outputLabel>Data: 
+                    <h:outputLabel>DATA: 
                         <p:outputLabel id="data"  value="#{pedidoBean.pedido.data}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </p:outputLabel>
                     </h:outputLabel>
-                    <h:outputLabel>Funcionario: 
+                    <h:outputLabel>FUNCIONÁRIO: 
                         <p:outputLabel id="funcionario"  value="#{pedidoBean.funcionarioBean.funcionario.nome}">                  
                         </p:outputLabel>
                     </h:outputLabel>
-                    <p:outputLabel for="comboboxCliente">Cliente: 
+                    <p:outputLabel for="comboboxCliente">CLIENTE: 
                         <p:selectOneMenu filter="true" id="comboboxCliente"  value="#{pedidoBean.pedido.cliente}" converter="clienteConverter">
                             <f:selectItem itemLabel="Selecione um Cliente" />
                             <f:selectItems value="#{pedidoBean.listaCliente}"  var="Cliente" itemValue="#{Cliente}" itemLabel="#{Cliente.nome}"/>       
                         </p:selectOneMenu>
                     </p:outputLabel>
-                    <h:outputLabel>Valor Total: 
+                    <h:outputLabel>VALOR TOTAL: 
                         <p:outputLabel id="total"  value="#{pedidoBean.pedido.total}">  
                             <f:convertNumber pattern="#0.00" />
                         </p:outputLabel>
                     </h:outputLabel>
                 </h:panelGrid>
 
-                <h:panelGrid columns="3">
+                <p:separator/>
+
+                <p:panelGrid columns="2" style="margin-bottom:10px">
+                    <h:outputText value="CADASTRAR ENTREGA: " />
+                    <p:selectBooleanCheckbox value="#{pedidoBean.cadastroEntrega}">
+                        <p:ajax update=":form_dialago_fimVenda:painelGroupEntrega" />
+                    </p:selectBooleanCheckbox>
+                </p:panelGrid>
+                <p:separator/>
+
+                <h:panelGroup id="painelGroupEntrega">
+                    <p:panelGrid id="painel_Entrega" columns="1" rendered="#{pedidoBean.cadastroEntrega==true}" >
+                        <p:outputLabel>HORA:
+                            <p:outputLabel value="#{entregaBean.entrega.hora}"> 
+                                <f:convertDateTime pattern="HH:mm:ss" timeZone="GMT-02:00"/>
+                            </p:outputLabel>
+                        </p:outputLabel>
+                        <p:outputLabel for="comboboxEntregador">ENTREGADOR: 
+                            <p:selectOneMenu filter="true" id="comboboxEntregador"  value="#{entregaBean.entrega.entregador}" converter="entregadorConverter" >
+                                <f:selectItem itemLabel="Selecione um entregador" />
+                                <f:selectItems value="#{entregaBean.listaEntregadores}"  var="Entregador" itemValue="#{Entregador}" itemLabel="#{Entregador.nome}"/>       
+                            </p:selectOneMenu>
+                        </p:outputLabel>
+                        <p:outputLabel>TAXA:
+                            <p:inputText value = "#{entregaBean.entrega.taxa}"/>
+                        </p:outputLabel>
+                    </p:panelGrid>
+                </h:panelGroup>    
+
+                <h:panelGrid columns="2">
                     <p:commandButton value="Salvar" 
                                      id="salvar"  
                                      actionListener="#{pedidoBean.inserirPedido()}"
-                                     update=":form_venda:dataTableItens :form_dialago_fimVenda:painel_dialago_venda :mensagem"/>
+                                     update=":form_venda:dataTableItens :form_dialago_fimVenda :mensagem"/>
                     <p:commandButton value="Sair" id="fechar" 
                                      actionListener="#{pedidoBean.limpar()}" 
                                      oncomplete="PF('dialago').hide()" 
                                      update=":form_venda:dataTableItens"/>
-                    <p:commandButton value="Cadastrar Entregador" id="cadastrarEntrega" 
-                                     oncomplete="PF('dialagoEntrega').show()" 
-                                     />
                 </h:panelGrid>
+
             </h:form>
 
         </p:dialog>
-
-        <p:dialog widgetVar="dialagoEntrega" closable="false" modal="true" header="Controle Entrega" resizable="false">
-            <h:form id="form_dialago_fimEntrega">
-
-                <h:panelGrid id="painel_dialago_Entrega" columns="1">
-
-
-                    <p:outputLabel>Hora:
-                        <p:outputLabel value="#{entregaBean.entrega.hora}"> 
-                            <f:convertDateTime pattern="HH:mm:ss" timeZone="GMT-02:00"/>
-                        </p:outputLabel>
-                    </p:outputLabel>
-                    <p:outputLabel for="comboboxEntregador">Entregador: 
-                        <p:selectOneMenu filter="true" id="comboboxEntregador"  value="#{entregaBean.entrega.entregador}" converter="entregadorConverter" >
-                            <f:selectItem itemLabel="Selecione um entregador" />
-                            <f:selectItems value="#{entregaBean.listaEntregadores}"  var="Entregador" itemValue="#{Entregador}" itemLabel="#{Entregador.nome}"/>       
-                        </p:selectOneMenu>
-                    </p:outputLabel>
-                   
-                    <p:outputLabel>Taxa:
-                        <p:inputText value = "#{entregaBean.entrega.taxa}"/>
-                    </p:outputLabel>
-                </h:panelGrid>
-
-                <h:panelGrid columns="2">
-                    <p:commandButton value="Salvar" 
-                                     id="salvar"      
-                                     />
-                    <p:commandButton value="Sair" id="sair"       
-                                     actionListener="#{entregaBean.limpar()}" 
-                                     oncomplete="PF('dialagoEntrega').hide()" 
-                                     update=":form_dialago_fimEntrega"
-                                     />
-                </h:panelGrid>
-            </h:form>
-
-
-        </p:dialog>
-
 
     </ui:define>
 </ui:composition>

@@ -1,12 +1,14 @@
 package br.com.casadasmarmitas.controle;
 
 import br.com.casadasmarmitas.dao.ClienteDao;
+import br.com.casadasmarmitas.dao.EntregaDao;
 import br.com.casadasmarmitas.dao.FuncionarioDao;
 import br.com.casadasmarmitas.dao.ItemPedidoDao;
 import br.com.casadasmarmitas.dao.PedidoDao;
 import br.com.casadasmarmitas.dao.ProdutoDao;
 import br.com.casadasmarmitas.enumeradores.Status;
 import br.com.casadasmarmitas.modelo.Cliente;
+import br.com.casadasmarmitas.modelo.Entrega;
 import br.com.casadasmarmitas.modelo.Funcionario;
 import br.com.casadasmarmitas.modelo.ItemPedido;
 import br.com.casadasmarmitas.modelo.Pedido;
@@ -33,6 +35,9 @@ public class PedidoBean implements Serializable {
     private ProdutoDao produtoDao = new ProdutoDao();
     @ManagedProperty(value = "#{funcionarioBean}")
     private FuncionarioBean funcionarioBean;
+
+    @ManagedProperty(value = "#{entregaBean}")
+    private EntregaBean entregaBean;
     private Pedido pedido;
     private Boolean listaItensVazia;
 
@@ -41,6 +46,10 @@ public class PedidoBean implements Serializable {
 
     private ClienteDao clienteDao = new ClienteDao();
 
+    private Long codigoPedidoSalvo;
+
+    private boolean cadastroEntrega;
+
     public PedidoBean() {
         this.getListaProdutos();
     }
@@ -48,6 +57,7 @@ public class PedidoBean implements Serializable {
     public void limpar() {
         this.listaItens = new ArrayList<>();
         this.pedido = new Pedido();
+        this.cadastroEntrega = false;
     }
 
     public void adicionar(Produto produto) {
@@ -94,22 +104,20 @@ public class PedidoBean implements Serializable {
 
     public void inserirPedido() {
         try {
-            if (pedido.getTotal() == 0) {
+            if (pedido.getTotal() == 0.0) {
                 Messages.addGlobalError("Adicione itens ao pedido!");
             } else {
                 PedidoDao pedidoDao = new PedidoDao();
                 FuncionarioDao funcionarioDao = new FuncionarioDao();
 
-                pedido.setStatus(Status.Entregue);
+                pedido.setStatus(Status.Pendente);
 
                 this.funcionario = funcionarioDao.autenticarLogin(funcionarioBean.getFuncionario().getUsuario(), funcionarioBean.getFuncionario().getSenha());
 
                 pedido.setFuncionario(this.funcionario);
-                Long codigo = pedidoDao.salvar(pedido, listaItens);
+                codigoPedidoSalvo = pedidoDao.salvar(pedido, listaItens, entregaBean.getEntrega(), cadastroEntrega);
 
-                
-
-                Messages.addGlobalInfo("Salvo com sucesso!");
+                Messages.addGlobalInfo("Salvo com sucesso! Codigo: " + codigoPedidoSalvo);
             }
 
         } catch (Exception e) {
@@ -194,6 +202,30 @@ public class PedidoBean implements Serializable {
 
     public void setFuncionarioBean(FuncionarioBean funcionarioBean) {
         this.funcionarioBean = funcionarioBean;
+    }
+
+    public Long getCodigoPedidoSalvo() {
+        return codigoPedidoSalvo;
+    }
+
+    public void setCodigoPedidoSalvo(Long codigoPedidoSalvo) {
+        this.codigoPedidoSalvo = codigoPedidoSalvo;
+    }
+
+    public boolean getCadastroEntrega() {
+        return cadastroEntrega;
+    }
+
+    public void setCadastroEntrega(boolean cadastroEntrega) {
+        this.cadastroEntrega = cadastroEntrega;
+    }
+
+    public EntregaBean getEntregaBean() {
+        return entregaBean;
+    }
+
+    public void setEntregaBean(EntregaBean entregaBean) {
+        this.entregaBean = entregaBean;
     }
 
 }

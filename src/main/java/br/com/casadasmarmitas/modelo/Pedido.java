@@ -94,7 +94,7 @@ public class Pedido implements Serializable{
 
     public void setTotal(Double total) {
         this.total = total;
-    }
+    }    
 
     @Override
     public String toString() {
