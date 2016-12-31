@@ -1,13 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Teste;
 
+import br.com.casadasmarmitas.controle.ClienteBean;
 import br.com.casadasmarmitas.dao.ClienteDao;
 import br.com.casadasmarmitas.modelo.Cliente;
+import br.com.casadasmarmitas.util.HibernateUtil;
+import java.sql.Connection;
 import java.util.List;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
+import net.sf.jasperreports.view.JasperViewer;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -17,6 +20,23 @@ import org.junit.Test;
  */
 public class ClienteTeste {
     @Test
+    @Ignore
+    public void imprimir(){
+        String src = "C:/Users/Tardeli/OneDrive/ProjetoWeb_Inicio/CasadasMarmitasMavem/src/main/webapp/relatorio/cliente.jasper";
+
+        Connection conexao = HibernateUtil.getConnection();
+
+        try {
+            JasperPrint jasperPrint = JasperFillManager.fillReport(src, null, conexao);
+            JasperViewer viewer = new JasperViewer(jasperPrint, true);
+            JasperPrintManager.printReport(jasperPrint, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Test
+    @Ignore
     public void listar() {
         ClienteDao cliente = new ClienteDao();
         List<Cliente> objetos = cliente.listarObjetos();
@@ -29,6 +49,7 @@ public class ClienteTeste {
     }
     
     @Test
+    @Ignore
     public void pesquisarCpf() {
         ClienteDao c = new ClienteDao();
         Boolean b = c.pesquisarCpf("111.111.111-12");
@@ -53,4 +74,5 @@ public class ClienteTeste {
         objeto.setPontoReferencia("123e");
         clienteDao.salvarOuAtualizarObjeto(objeto);    
    }
+    
 }
