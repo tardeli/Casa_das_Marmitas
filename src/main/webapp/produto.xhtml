@@ -21,7 +21,7 @@
                     <p:column headerText="Cód." width="30">
                         <h:outputText value="#{produto.codigo}" />
                     </p:column>
-                    <p:column headerText="Nome" sortBy="#{produto.nome}" filterBy="#{produto.nome}">
+                    <p:column headerText="Nome" sortBy="#{produto.nome}" filterBy="#{produto.nome}" filterMatchMode="contains">
                         <h:outputText value="#{produto.nome}" />
                     </p:column>
                     <p:column headerText="Descrição">

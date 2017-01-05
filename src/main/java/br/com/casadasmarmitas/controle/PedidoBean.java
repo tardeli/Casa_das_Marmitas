@@ -1,20 +1,19 @@
 package br.com.casadasmarmitas.controle;
 
 import br.com.casadasmarmitas.dao.ClienteDao;
-import br.com.casadasmarmitas.dao.EntregaDao;
 import br.com.casadasmarmitas.dao.FuncionarioDao;
 import br.com.casadasmarmitas.dao.ItemPedidoDao;
 import br.com.casadasmarmitas.dao.PedidoDao;
 import br.com.casadasmarmitas.dao.ProdutoDao;
 import br.com.casadasmarmitas.enumeradores.Status;
 import br.com.casadasmarmitas.modelo.Cliente;
-import br.com.casadasmarmitas.modelo.Entrega;
 import br.com.casadasmarmitas.modelo.Funcionario;
 import br.com.casadasmarmitas.modelo.ItemPedido;
 import br.com.casadasmarmitas.modelo.Pedido;
 import br.com.casadasmarmitas.modelo.Produto;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -32,6 +31,8 @@ public class PedidoBean implements Serializable {
     private List<Produto> listaProdutos;
     private List<ItemPedido> listaItens;
     private List<Cliente> listaCliente;
+    private List<Pedido> listaPedidos;
+    
     private ProdutoDao produtoDao = new ProdutoDao();
     @ManagedProperty(value = "#{funcionarioBean}")
     private FuncionarioBean funcionarioBean;
@@ -39,6 +40,8 @@ public class PedidoBean implements Serializable {
     @ManagedProperty(value = "#{entregaBean}")
     private EntregaBean entregaBean;
     private Pedido pedido;
+    private PedidoDao pedidoDao = new PedidoDao();
+    private ItemPedidoDao itemPedidoDao = new ItemPedidoDao();
     private Boolean listaItensVazia;
 
     private Funcionario funcionario;
@@ -111,6 +114,7 @@ public class PedidoBean implements Serializable {
                 FuncionarioDao funcionarioDao = new FuncionarioDao();
 
                 pedido.setStatus(Status.Pendente);
+                pedido.setData(new Date());
 
                 this.funcionario = funcionarioDao.autenticarLogin(funcionarioBean.getFuncionario().getUsuario(), funcionarioBean.getFuncionario().getSenha());
 
@@ -126,6 +130,14 @@ public class PedidoBean implements Serializable {
 
         limpar();
         this.getListaItensVazia();
+    }
+    
+    public void editarPedido(Pedido pedido){
+        
+        this.listaItens = itemPedidoDao.buscarItensPedido(pedido.getCodigo());
+        calcular();
+        this.getListaItensVazia();
+    
     }
 
     public List<Produto> getListaProdutos() {
@@ -174,6 +186,14 @@ public class PedidoBean implements Serializable {
         this.listaCliente = listaCliente;
     }
 
+    public List<Pedido> getListaPedidos() {
+        return listaPedidos = pedidoDao.listarObjetos();
+    }
+
+    public void setListaPedidos(List<Pedido> listaPedidos) {
+        this.listaPedidos = listaPedidos;
+    }
+    
     public Boolean getListaItensVazia() {
         if (listaItens == null || listaItens.isEmpty()) {
             return listaItensVazia = false;

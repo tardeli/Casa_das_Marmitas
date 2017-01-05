@@ -1,7 +1,6 @@
 
 package Teste;
 
-import br.com.casadasmarmitas.controle.ClienteBean;
 import br.com.casadasmarmitas.dao.ClienteDao;
 import br.com.casadasmarmitas.modelo.Cliente;
 import br.com.casadasmarmitas.util.HibernateUtil;
@@ -10,7 +9,6 @@ import java.util.List;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
-import net.sf.jasperreports.view.JasperViewer;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -23,12 +21,12 @@ public class ClienteTeste {
     @Ignore
     public void imprimir(){
         String src = "C:/Users/Tardeli/OneDrive/ProjetoWeb_Inicio/CasadasMarmitasMavem/src/main/webapp/relatorio/cliente.jasper";
-
+                      
         Connection conexao = HibernateUtil.getConnection();
 
         try {
             JasperPrint jasperPrint = JasperFillManager.fillReport(src, null, conexao);
-            JasperViewer viewer = new JasperViewer(jasperPrint, true);
+            //JasperViewer viewer = new JasperViewer(jasperPrint, true);
             JasperPrintManager.printReport(jasperPrint, true);
         } catch (Exception e) {
             e.printStackTrace();

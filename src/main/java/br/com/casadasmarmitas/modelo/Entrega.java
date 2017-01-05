@@ -26,7 +26,7 @@ public class Entrega implements Serializable{
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long codigo;
     @ManyToOne
-    @JoinColumn(name = "pedido")
+    @JoinColumn(name = "pedido", nullable = false)
     private Pedido pedido;
     @ManyToOne
     @JoinColumn(name = "entregador")

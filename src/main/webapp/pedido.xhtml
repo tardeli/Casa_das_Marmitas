@@ -12,13 +12,13 @@
 
         <h:form id="form_venda">   
 
-            <p:panel header="Lista - Produtos">
+            <p:panel header="Lista - Produtos">       
                 <p:dataTable id = "dataTableProdutos" value="#{pedidoBean.listaProdutos}" var="produto" 
                              emptyMessage="Nenhum Registro Encotrado com esta pesquisa" paginator="true" paginatorPosition="top" rows="2" style="font-size: 11pt"><br />
                     <p:column headerText="Cód." width="30">
                         <h:outputText value="#{produto.codigo}" />
                     </p:column>
-                    <p:column headerText="Nome" sortBy="#{produto.nome}" filterBy="#{produto.nome}">
+                    <p:column headerText="Nome" sortBy="#{produto.nome}" filterBy="#{produto.nome}" filterMatchMode="contains">
                         <h:outputText value="#{produto.nome}" />
                     </p:column>
                     <p:column headerText="Descrição">

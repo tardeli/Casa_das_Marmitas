@@ -21,10 +21,10 @@
                     <p:column headerText="Cód." width="30">
                         <h:outputText value="#{entregador.codigo}" />
                     </p:column>
-                    <p:column headerText="Entregador" sortBy="#{entregador.nome}" filterBy="#{entregador.nome}">
+                    <p:column headerText="Entregador" sortBy="#{entregador.nome}" filterBy="#{entregador.nome}" filterMatchMode="contains">
                         <h:outputText value="#{entregador.nome}" />
                     </p:column>
-                    <p:column headerText="Empresa" sortBy="#{entregador.empresa.nome}" filterBy="#{entregador.empresa.nome}">
+                    <p:column headerText="Empresa" sortBy="#{entregador.empresa.nome}" filterBy="#{entregador.empresa.nome}" filterMatchMode="contains">
                         <h:outputText value="#{entregador.empresa.nome}" />
                     </p:column>
                     <p:column headerText="Telefone">

@@ -22,7 +22,7 @@
                     <p:column headerText="Cód." width="30">
                         <h:outputText value="#{empresa.codigo}" />
                     </p:column>
-                    <p:column headerText="Nome" sortBy="#{empresa.nome}" filterBy="#{empresa.nome}">
+                    <p:column headerText="Nome" sortBy="#{empresa.nome}" filterBy="#{empresa.nome}" filterMatchMode="contains">
                         <h:outputText value="#{empresa.nome}" />
                     </p:column>
                     <p:column headerText="Telefone" width="90">

@@ -12,7 +12,9 @@ import br.com.casadasmarmitas.util.HibernateUtil;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import net.sf.jasperreports.engine.JRException;
@@ -27,6 +29,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import org.hibernate.Session;
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.primefaces.component.datatable.DataTable;
 
 /**
  *
@@ -82,19 +85,30 @@ public class ClienteBean implements Serializable {
     }
 
     public void imprimir() {
-        
-        String src = "C:/Users/Tardeli/OneDrive/ProjetoWeb_Inicio/CasadasMarmitasMavem/src/main/webapp/relatorio/cliente.jasper";
+        Map<String, Object> paramentros = new HashMap<>();
+
+        DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("form_cliente:dataTable");
+        Map<String, Object> filtros = tabela.getFilters();
+
+        String filtroNome = (String) filtros.get("nome");
+
+        if (filtroNome == null) {
+            paramentros.put("PESQUISAR_CLIENTE", "%%");
+        } else {
+            paramentros.put("PESQUISAR_CLIENTE", "%" + filtroNome + "%");
+        }
 
         Connection conexao = HibernateUtil.getConnection();
+        String src = Faces.getRealPath("/relatorio/cliente.jasper");
 
         try {
-            JasperPrint jasperPrint = JasperFillManager.fillReport(src, null, conexao);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(src, paramentros, conexao);
             //JasperViewer viewer = new JasperViewer(jasperPrint, true);
             //viewer.setVisible(true);
-            
+
             JasperPrintManager.printReport(jasperPrint, true);
             //JasperExportManager.exportReportToPdfFile(jasperPrint, "C:/Users/Tardeli/OneDrive/ProjetoWeb_Inicio/CasadasMarmitasMavem/src/main/webapp/relatorio/RelatorioClientes.pdf");
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }

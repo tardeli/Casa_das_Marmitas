@@ -60,7 +60,7 @@ public class Pedido implements Serializable{
 
     @Temporal(TemporalType.DATE)
     public Date getData() {
-        return data = new Date();
+        return data;
     }
 
     public void setData(Date data) {

@@ -7,11 +7,13 @@ package Teste;
 
 import br.com.casadasmarmitas.dao.ClienteDao;
 import br.com.casadasmarmitas.dao.FuncionarioDao;
+import br.com.casadasmarmitas.dao.ItemPedidoDao;
 import br.com.casadasmarmitas.dao.PedidoDao;
 import br.com.casadasmarmitas.modelo.Cliente;
 import br.com.casadasmarmitas.modelo.Funcionario;
 import br.com.casadasmarmitas.modelo.Pedido;
 import br.com.casadasmarmitas.enumeradores.Status;
+import br.com.casadasmarmitas.modelo.ItemPedido;
 import java.util.Date;
 import java.util.List;
 import org.junit.Ignore;
@@ -67,17 +69,25 @@ public class PedidoTeste {
 //                    
 //        }
         
-        
     }
     
     @Test
-    @Ignore
     public void buscarPedido(){
         PedidoDao dao = new PedidoDao();
         Pedido pedido = dao.buscarObjeto(1L);
         System.out.println("-------------------------------------------");
         System.out.println(pedido.toString());
-        System.out.println("-------------------------------------------");     
+        System.out.println("-------------------------------------------"); 
+        
+        ItemPedidoDao itemPedidoDao = new ItemPedidoDao();
+        List<ItemPedido> itensPedido = itemPedidoDao.buscarItensPedido(11L);
+        
+        for (ItemPedido itemPedido : itensPedido) {
+            System.out.println(itemPedido.toString());
+        }
+        
+        
+        
     }
     
     @Test

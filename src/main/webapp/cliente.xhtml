@@ -23,7 +23,7 @@
                     <p:column headerText="Cód." width="30">
                         <h:outputText value="#{cliente.codigo}" />
                     </p:column>
-                    <p:column headerText="Nome" sortBy="#{cliente.nome}" filterBy="#{cliente.nome}">
+                    <p:column headerText="Nome" sortBy="#{cliente.nome}" filterBy="#{cliente.nome}" filterMatchMode="contains" >
                         <h:outputText value="#{cliente.nome}" />
                     </p:column>
                     <p:column headerText="Data de Nascimento" width="80">
@@ -84,7 +84,7 @@
                 </h:panelGrid>
                 <h:panelGrid columns="2">
 
-                    <p:commandButton widgetVar="btn_salvar" value="Salvar" id="salvar" actionListener="#{clienteBean.salvar()}"  oncomplete="PF('dialago').hide()" update=":form_cliente :mensagem" />
+                    <p:commandButton value="Salvar" id="salvar" actionListener="#{clienteBean.salvar()}"  oncomplete="PF('dialago').hide()" update=":form_cliente :mensagem" />
                     <p:commandButton value="Fechar" id="fechar" actionListener="#{clienteBean.novo()}" oncomplete="PF('dialago').hide()" update="@form :form_cliente"/>
                 </h:panelGrid>
             </h:form>
